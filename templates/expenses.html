@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Expense Tracker - List Expenses{% endblock %}
+
+{% block content %}
+<h1>Expense List</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Amount</th>
+    </tr>
+    {% for expense in expenses %}
+    <tr>
+        <td>{{ expense.id }}</td>
+        <td>{{ expense.category }}</td>
+        <td>{{ expense.amount }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Expense Tracker - Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome to Expense Tracker</h1>
+
+<form action="/add" method="POST">
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" required><br><br>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" step="0.01" required><br><br>
+    <button type="submit">Add Expense</button>
+</form>
+
+<canvas id="expenseChart" width="400" height="400"></canvas>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    fetch('/data')
+        .then(response => response.json())
+        .then(data => {
+            var ctx = document.getElementById('expenseChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Expense Categories',
+                        data: data.values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        });
+</script>
+{% endblock %}
